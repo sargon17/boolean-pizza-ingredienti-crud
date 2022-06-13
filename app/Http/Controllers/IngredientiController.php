@@ -57,8 +57,9 @@ class IngredientiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ingrediente $ingrediente)
+    public function show($id)
     {
+        $ingrediente = Ingrediente::find($id);
         return view("ingredienti.show", compact("ingrediente"));
     }
 
@@ -72,7 +73,8 @@ class IngredientiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ingrediente = Ingrediente::find($id);
+        return view("ingredienti.edit", compact("ingrediente"));
     }
 
     /**
@@ -84,7 +86,20 @@ class IngredientiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate(
+            [
+                "name" => "required",
+            ],
+            [
+                "name.required" => "Il nome è obbligatorio",
+            ]
+        );
+
+        $ingrediente = Ingrediente::find($id);
+        $ingrediente->name = $request->name;
+        $ingrediente->update();
+
+        return redirect()->route("ingredienti.index");
     }
 
     /**
@@ -95,5 +110,10 @@ class IngredientiController extends Controller
      */
     public function destroy($id)
     {
+        $ingrediente = Ingrediente::find($id);
+        if ($ingrediente) {
+            $ingrediente->delete();
+        }
+        return redirect()->route("ingredienti.index");
     }
 }
