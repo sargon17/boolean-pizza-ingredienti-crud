@@ -17,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::resource('pizze', 'PizzaController');
+Route::resource("pizze", "PizzaController");
+Route::resource("/ingredienti", "IngredientiController");
+
+Route::get("{any?}", function () {
+    return view("pizze"); // ! set this view to index.blade.php
+})->where("any", ".*");

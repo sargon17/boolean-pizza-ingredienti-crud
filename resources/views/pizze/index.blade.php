@@ -78,7 +78,7 @@
                 </li>
             @endforeach
         </ul>
-
+        <a href="{{ route('ingredienti.index') }}"> Ingredienti</a>
     </div>
 </body>
 
