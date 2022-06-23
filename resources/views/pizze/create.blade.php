@@ -13,6 +13,16 @@
         @csrf
         <label for="nome_pizza">Inserisci il nome della pizza:</label>
         <input type="text" name="nome_pizza" placeholder="Nome Pizza">
+        <div class="form-group">
+        <h3>Inngredienti</h3>
+        @foreach ($ingredienti as $ingrediente)
+            <input type="checkbox" value="{{$ingrediente->id}}" name="ingredienti[]"
+            {{ in_array($ingrediente->id, old("ingredienti", [])) ? "checked" : "" }}/>
+            <label class="mr-3">{{$ingrediente->name}}</label>
+        @endforeach
+    </div>
+
+
         <button type="submit">salva pizza</button>
     </form>
 </body>

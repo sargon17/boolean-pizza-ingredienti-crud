@@ -17,7 +17,7 @@ class PizzaController extends Controller
     {
         //
         $pizze = Pizza::all();
-        return view('pizze.index', compact('pizze'));
+        return view("pizze.index", compact("pizze"));
     }
 
     /**
@@ -27,8 +27,8 @@ class PizzaController extends Controller
      */
     public function create()
     {
-        //
-        return view('pizze.create');
+        $ingredienti = Ingrediente::all();
+        return view("pizze.create", compact("ingredienti"));
     }
 
     /**
@@ -43,10 +43,11 @@ class PizzaController extends Controller
         $data = $request->all();
         $newPizza = new Pizza();
 
-        $newPizza->nome_pizza = $data['nome_pizza'];
+        $newPizza->nome_pizza = $data["nome_pizza"];
         $newPizza->save();
+        $newPizza->ingredienti()->sync($request["ingredienti"]);
 
-        return redirect()->route('pizze.show', $newPizza->id);
+        return redirect()->route("pizze.show", $newPizza->id);
     }
 
     /**
@@ -60,7 +61,7 @@ class PizzaController extends Controller
         //
         $pizza = Pizza::findOrFail($id);
         $ingredienti = $pizza->ingredienti;
-        return view('pizze.show', compact('pizza', 'ingredienti'));
+        return view("pizze.show", compact("pizza", "ingredienti"));
     }
 
     /**
@@ -74,7 +75,7 @@ class PizzaController extends Controller
         //
         $pizza = Pizza::find($id);
 
-        return view('pizze.edit', compact('pizza'));
+        return view("pizze.edit", compact("pizza"));
     }
 
     /**
@@ -91,7 +92,7 @@ class PizzaController extends Controller
         $data = $request->all();
         $pizza->update($data);
 
-        return redirect()->route('pizze.show', $pizza->id);
+        return redirect()->route("pizze.show", $pizza->id);
     }
 
     /**
@@ -104,6 +105,6 @@ class PizzaController extends Controller
     {
         $pizza = Pizza::find($id);
         $pizza->delete();
-        return redirect()->route('pizze.index');
+        return redirect()->route("pizze.index");
     }
 }

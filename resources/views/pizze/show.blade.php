@@ -10,7 +10,7 @@
 
 <body>
     <h1>{{ $pizza->nome_pizza }}</h1>
-    <h1>Ingredienti</h1>
+    <h3>Ingredienti</h3>
     @if ($ingredienti->isEmpty())
     <div>
         non ci sono ingredienti in questa pizza!
